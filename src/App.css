@@ -1,0 +1,138 @@
+.App {
+  margin: 0px auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+
+.pull-request,
+.null-event {
+  height: 50px;
+  width: 300px;
+  padding: 5px;
+  margin: 15px 25px;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.pull-request {
+  font-size: 14px;
+  color: #1b2834;
+  position: relative;
+  box-shadow: rgba(49, 53, 56, 0.5) 0px 1px 4px;
+  /* animation: popin 1s; */
+}
+
+.pull-request:hover {
+  opacity: 1.0 !important;
+}
+
+@keyframes popin {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.0);
+  }
+}
+
+.null-event {
+  justify-content: center;
+}
+.null-event.loader {
+  background: #455b6e;
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+}
+
+.dependabot-loader {
+  width: 30px;
+  height: 30px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+.pull-request.bundler { background-color: #FFCFD2; }
+.pull-request.cargo { background-color: #FDE4CF; }
+.pull-request.composer { background-color: #A3C4F3; }
+.pull-request.docker { background-color: #D2DDE1; }
+.pull-request.elm { background-color: #8EECF5; }
+.pull-request.github_actions { background-color: #FFCFD2; }
+.pull-request.git_submodules { background-color: #D2DDE1; }
+.pull-request.go_modules { background-color: #8EECF5; }
+.pull-request.gradle { background-color: #FDE4CF; }
+.pull-request.hex { background-color: #CFBAF0; }
+.pull-request.maven { background-color: #FDE4CF; }
+.pull-request.npm_and_yarn { background-color: #FBF8CC; }
+.pull-request.nuget { background-color: #B9FBC0; }
+.pull-request.pub { background-color: #98F5E1; }
+.pull-request.pip { background-color: #90DBF4; }
+.pull-request.terraform { background-color: #D2DDE1; }
+
+.pull-request .dependency {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.pull-request .versions {
+  font-weight: 400;
+  font-size: 12px;
+}
+.pull-request .dependency,
+.pull-request .versions {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+  width: 200px;
+}
+
+.pull-request .avatar {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  right: -26px;
+  top: -4.5px;
+  border-radius: 40px;
+  margin-right: 10px;
+  overflow: hidden;
+  border-width: 5px;
+  border-style: solid;
+  background: #fff;
+  border:  5px solid white !important;
+  box-shadow: rgba(49, 53, 56, 0.18) 1px 1px 8px;
+}
+
+.pull-request .avatar img {
+  height: 62px;
+  width: 62px;
+}
+
+.ecosystem-icon {
+  width: 18px;
+  height: 18px;
+  margin: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #1b2834;
+}

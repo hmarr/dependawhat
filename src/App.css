@@ -10,8 +10,7 @@
   box-sizing: border-box;
 }
 
-.pull-request,
-.null-event {
+.cell {
   height: 50px;
   width: 300px;
   padding: 5px;
@@ -22,31 +21,37 @@
   border-radius: 6px;
 }
 
-.pull-request {
+.cell.dependabot-update {
   font-size: 14px;
   color: #1b2834;
   position: relative;
   box-shadow: rgba(49, 53, 56, 0.5) 0px 1px 4px;
-  /* animation: popin 1s; */
 }
 
-.pull-request:hover {
+.cell.dependabot-update:hover {
   opacity: 1.0 !important;
 }
 
+.cell.dependabot-update.newest {
+  animation: popin 0.2s ease-in-out;
+}
+
 @keyframes popin {
-  from {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
     transform: scale(1.06);
   }
-  to {
+  100% {
     transform: scale(1.0);
   }
 }
 
-.null-event {
+.cell.empty {
   justify-content: center;
 }
-.null-event.loader {
+.cell.empty.loader {
   background: #455b6e;
   width: 50px;
   height: 50px;
@@ -71,33 +76,39 @@
   }
 }
 
-.pull-request.bundler { background-color: #FFCFD2; }
-.pull-request.cargo { background-color: #FDE4CF; }
-.pull-request.composer { background-color: #A3C4F3; }
-.pull-request.docker { background-color: #D2DDE1; }
-.pull-request.elm { background-color: #8EECF5; }
-.pull-request.github_actions { background-color: #FFCFD2; }
-.pull-request.git_submodules { background-color: #D2DDE1; }
-.pull-request.go_modules { background-color: #8EECF5; }
-.pull-request.gradle { background-color: #FDE4CF; }
-.pull-request.hex { background-color: #CFBAF0; }
-.pull-request.maven { background-color: #FDE4CF; }
-.pull-request.npm_and_yarn { background-color: #FBF8CC; }
-.pull-request.nuget { background-color: #B9FBC0; }
-.pull-request.pub { background-color: #98F5E1; }
-.pull-request.pip { background-color: #90DBF4; }
-.pull-request.terraform { background-color: #D2DDE1; }
+.cell.dependabot-update.bundler { background-color: #FFCFD2; }
+.cell.dependabot-update.cargo { background-color: #FDE4CF; }
+.cell.dependabot-update.composer { background-color: #A3C4F3; }
+.cell.dependabot-update.docker { background-color: #D2DDE1; }
+.cell.dependabot-update.elm { background-color: #8EECF5; }
+.cell.dependabot-update.github_actions { background-color: #FFCFD2; }
+.cell.dependabot-update.git_submodules { background-color: #D2DDE1; }
+.cell.dependabot-update.go_modules { background-color: #8EECF5; }
+.cell.dependabot-update.gradle { background-color: #FDE4CF; }
+.cell.dependabot-update.hex { background-color: #CFBAF0; }
+.cell.dependabot-update.maven { background-color: #FDE4CF; }
+.cell.dependabot-update.npm_and_yarn { background-color: #FBF8CC; }
+.cell.dependabot-update.nuget { background-color: #B9FBC0; }
+.cell.dependabot-update.pub { background-color: #98F5E1; }
+.cell.dependabot-update.pip { background-color: #90DBF4; }
+.cell.dependabot-update.terraform { background-color: #D2DDE1; }
 
-.pull-request .dependency {
+.cell.dependabot-update .ecosystem-icon {
+  width: 18px;
+  height: 18px;
+  margin: 10px;
+}
+
+.cell.dependabot-update .dependency {
   font-weight: 600;
   margin-bottom: 2px;
 }
-.pull-request .versions {
+.cell.dependabot-update .versions {
   font-weight: 400;
   font-size: 12px;
 }
-.pull-request .dependency,
-.pull-request .versions {
+.cell.dependabot-update .dependency,
+.cell.dependabot-update .versions {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -105,7 +116,7 @@
   width: 200px;
 }
 
-.pull-request .avatar {
+.cell.dependabot-update .avatar {
   height: 60px;
   width: 60px;
   position: absolute;
@@ -121,15 +132,9 @@
   box-shadow: rgba(49, 53, 56, 0.18) 1px 1px 8px;
 }
 
-.pull-request .avatar img {
+.cell.dependabot-update .avatar img {
   height: 62px;
   width: 62px;
-}
-
-.ecosystem-icon {
-  width: 18px;
-  height: 18px;
-  margin: 10px;
 }
 
 a {

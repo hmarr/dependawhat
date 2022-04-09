@@ -1,32 +1,4 @@
-export type Ecosystem = "bundler"
-  | "cargo"
-  | "composer"
-  | "docker"
-  | "elm"
-  | "github_actions"
-  | "git_submodules"
-  | "go_modules"
-  | "gradle"
-  | "hex"
-  | "maven"
-  | "npm_and_yarn"
-  | "nuget"
-  | "pub"
-  | "pip"
-  | "terraform"
-
-export interface DependabotEvent {
-  id: string;
-  repo: string;
-  repoOwner: string;
-  repoOwnerAvatarUrl: string;
-  ecosystem: Ecosystem;
-  dependency: string;
-  fromVersion: string;
-  toVersion: string;
-  title: string;
-  prUrl: string;
-}
+import { DependabotUpdate, Ecosystem } from "./dependabot-update";
 
 interface GitHubEvent {
   id: string;
@@ -49,22 +21,22 @@ interface GitHubEvent {
 
 const GITHUB_EVENT_STREAM_URL = 'https://github-firehose.libraries.io/events';
 
-export function subscribe(callback: (event: DependabotEvent) => void): () => void {
+export function subscribe(callback: (update: DependabotUpdate) => void): () => void {
   const source = new EventSource(GITHUB_EVENT_STREAM_URL);
   const listener = (rawEvent: MessageEvent) => {
     const ghEvent = JSON.parse(rawEvent.data) as GitHubEvent;
-    const event = dependabotEvent(ghEvent);
-    if (!event) {
+    const update = dependabotUpdateFromEvent(ghEvent);
+    if (!update) {
       return;
     }
 
-    callback(event);
+    callback(update);
   };
   source.addEventListener('event', listener);
   return () => source.removeEventListener('event', listener);
 }
 
-function dependabotEvent(event: GitHubEvent): DependabotEvent | null {
+function dependabotUpdateFromEvent(event: GitHubEvent): DependabotUpdate | null {
   if (event.type !== 'PullRequestEvent') {
     return null;
   }

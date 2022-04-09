@@ -17,7 +17,7 @@ import {
   SiRust,
   SiTerraform,
 } from "react-icons/si";
-import { Ecosystem } from "./events";
+import { Ecosystem } from "./dependabot-update";
 
 function EcosystemIcon({ ecosystem }: { ecosystem: Ecosystem }) {
   switch (ecosystem) {

@@ -22,6 +22,12 @@ async function preloadImage(src: string) {
   });
 }
 
+function sleep(timeout: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+}
+
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<AppState>({
@@ -37,6 +43,8 @@ function App() {
       const initialUpdates = await searchDependabotPrs();
       for (const update of initialUpdates) {
         await preloadImage(update.repoOwnerAvatarUrl);
+        await sleep(Math.random() * 1000);
+
         setState((prevState) => {
           if (prevState.updates.find((u) => u?.id === update.id)) {
             return prevState;

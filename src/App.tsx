@@ -4,6 +4,7 @@ import { subscribe } from "./events";
 import { DependabotUpdate } from "./dependabot-update";
 import DependabotUpdateCell from "./DependabotUpdateCell";
 import EmptyCell from "./EmptyCell";
+import { searchDependabotPrs } from "./search";
 
 interface AppState {
   updates: DependabotUpdate[];
@@ -31,21 +32,40 @@ function App() {
   });
 
   useEffect(() => {
-    subscribe(async (event) => {
-      await preloadImage(event.repoOwnerAvatarUrl);
+    // Load initial results from the GitHub search API
+    (async () => {
+      const initialUpdates = await searchDependabotPrs();
+      for (const update of initialUpdates) {
+        await preloadImage(update.repoOwnerAvatarUrl);
+        setState((prevState) => {
+          if (prevState.updates.find((u) => u?.id === update.id)) {
+            return prevState;
+          }
 
-      setState((oldState) => {
-        const { updates, totalCount } = oldState;
-        if (updates.find((e) => e?.id === event.id)) {
-          return oldState;
+          return {
+            ...prevState,
+            updates: [...prevState.updates, update].slice(-100),
+            totalCount: prevState.totalCount + 1,
+          };
+        });
+      }
+    })();
+
+    // Subscribe to the SSE feed of all public GitHub events to get
+    // live data
+    subscribe(async (update) => {
+      await preloadImage(update.repoOwnerAvatarUrl);
+
+      setState((prevState) => {
+        if (prevState.updates.find((u) => u?.id === update.id)) {
+          return prevState;
         }
 
-        const newUpdates = [...updates, event];
-        if (newUpdates.length > 100) {
-          newUpdates.shift();
-        }
-
-        return { ...oldState, updates: newUpdates, totalCount: totalCount + 1 };
+        return {
+          ...prevState,
+          updates: [...prevState.updates, update].slice(-100),
+          totalCount: prevState.totalCount + 1,
+        };
       });
     });
   }, []);

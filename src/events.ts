@@ -9,6 +9,7 @@ interface GitHubEvent {
   payload?: {
     action: string;
     pull_request?: {
+      id: number;
       body: string;
       title: string;
       html_url: string;
@@ -67,7 +68,7 @@ function dependabotUpdateFromEvent(event: GitHubEvent): DependabotUpdate | null 
   }
 
   return {
-    id: event.id,
+    id: pr.id.toString(),
     repo: event.repo.name,
     repoOwner: event.repo.name.split('/')[0],
     repoOwnerAvatarUrl: `https://github.com/${encodeURIComponent(

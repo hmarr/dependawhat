@@ -99,9 +99,14 @@ function App() {
   useLayoutEffect(() => updateGridSize(), [appRef]);
   useEffect(() => window.addEventListener("resize", updateGridSize), []);
 
-  const numUpdates =
-    state.rows * (state.cols - 1) + (state.totalCount % state.rows);
-  const updates = numUpdates > 0 ? state.updates.slice(-numUpdates) : [];
+  let updates: DependabotUpdate[] = [];
+  if (state.cols > 1) {
+    const lastCol = state.totalCount % state.rows;
+    const numUpdates = state.rows * (state.cols - 1) + lastCol;
+    updates = numUpdates > 0 ? state.updates.slice(-numUpdates) : [];
+  } else {
+    updates = state.updates.slice(-Math.max(state.rows - 1, 1));
+  }
   const emptyCells = Array(state.rows * state.cols - updates.length).fill(null);
 
   return (
